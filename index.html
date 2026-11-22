@@ -1,0 +1,106 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Font Converter</title><style>
+:root{--bg:#F4F4F4;--c1:#EAEAE9;--c2:#DCDCDD;--c4:#C7C7C7;--tx:#7E7E82;--out:#F2F2F2}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--bg);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;padding:10px 8px 60px;gap:10px;color:var(--tx)}
+.bar,.top,.main{width:100%;max-width:1050px}
+.bar{display:flex;gap:5px;align-items:center;flex-wrap:wrap;background:#fff;padding:7px;border-radius:14px;border:2px solid var(--c2)}
+select,input,button,textarea{font:inherit;font-size:12px;border-radius:10px;border:2px solid #fff;outline:0;color:var(--tx);background:var(--c1)}
+select{flex:1;padding:7px;font-weight:700;min-width:95px}
+button{padding:7px 9px;cursor:pointer;font-weight:700}
+button.off{opacity:.45;text-decoration:line-through}
+.top{display:grid;grid-template-columns:1fr 1.15fr;gap:10px;align-items:center}
+.doll{aspect-ratio:16/10;border-radius:14px;border:3px solid #fff;overflow:hidden;background:#fff}
+.doll img{width:100%;height:100%;object-fit:cover;display:block}
+.bwrap{position:relative;aspect-ratio:2.4/1;display:flex;align-items:center;justify-content:center}
+.bwrap .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;pointer-events:none}
+.btxt{position:relative;z-index:2;font-weight:700;font-size:16px;text-align:center;padding:6px 20px;max-width:82%;word-break:break-word;outline:0}
+.lamb{position:absolute;bottom:-22px;left:-6px;width:135px;z-index:3;mix-blend-mode:multiply;pointer-events:none}
+.main{display:grid;grid-template-columns:1.05fr 1fr;gap:10px;align-items:start}
+.plaid{background:url('plaid.png') repeat;padding:10px;border-radius:18px;border:2px solid #fff}
+.nb{position:relative;aspect-ratio:3/4.2;background:url('notebook.png') center/100% 100% no-repeat;mix-blend-mode:multiply;padding:9% 8% 8% 17%;display:flex;flex-direction:column;justify-content:space-between}
+.inwrap{position:relative;height:42%}
+.inwrap textarea,.rip textarea{width:100%;height:100%;background:0;border:0;border-radius:0;resize:none;font-size:14px}
+.inwrap textarea{background:repeating-linear-gradient(transparent,transparent 23px,var(--c2) 24px);line-height:24px;padding:0 4px}
+.cinna{position:absolute;bottom:-12px;right:-4px;width:100px;z-index:3;mix-blend-mode:multiply;pointer-events:none}
+.rip{position:relative;height:54%;background:url('ripped.png') center/100% 100% no-repeat;padding:14% 12% 16%}
+.rip textarea{line-height:23px;color:var(--out);text-shadow:0 1px 2px rgba(80,80,85,.65);font-weight:700}
+.cp{position:absolute;bottom:9%;right:10%;padding:4px 8px;font-size:11px;border-radius:8px}
+.rcol,.card{display:flex;flex-direction:column;gap:7px}
+.card{position:relative;background:rgba(255,255,255,.92);border:2px solid #fff;border-radius:15px;padding:9px}
+.sec{font-size:10px;font-weight:700;text-transform:uppercase}
+.row{display:flex;gap:4px;align-items:center}
+.row input{padding:6px 8px;width:100%}.row input:first-child{width:50px;flex-shrink:0;text-align:center}
+.slist{max-height:66px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+.sitem{display:flex;justify-content:space-between;align-items:center;background:var(--bg);padding:3px 6px;border-radius:7px;font-size:11px}
+.sitem button{padding:1px 6px;font-size:10px;border:0;background:var(--c2)}
+#abcBox{width:100%;height:125px;padding:6px;resize:vertical;line-height:1.45}
+.blank{min-height:105px;padding:10px 10px 10px 76px;font-size:13px;outline:0;white-space:pre-wrap}
+.bunny{position:absolute;bottom:-14px;left:-12px;width:95px;z-index:3;mix-blend-mode:multiply;pointer-events:none}
+.paws{position:fixed;bottom:0;left:0;width:100%;height:46px;z-index:20;pointer-events:none;display:flex;overflow:hidden}
+.paws img{height:100%;width:auto;flex-shrink:0;mix-blend-mode:multiply}
+[contenteditable="true"]{border:1.5px dashed var(--c4);border-radius:8px}
+</style></head><body>
+<div class="bar"><select id="fs"></select><button id="ab">Aa</button><button id="nb">New</button><button id="pb">Pin</button><button id="db">Delete</button><button id="sb">Copy Link</button></div>
+<div class="top"><div class="doll"><img id="dollImg" src="doll.gif"></div><div class="bwrap"><img class="bg" src="mask.png"><div class="btxt" id="btxt">txt :</div><img class="lamb" src="lamb.png"></div></div>
+<div class="main">
+  <div class="plaid"><div class="nb"><div class="inwrap"><textarea id="in"></textarea><img class="cinna" src="cinna.png"></div><div class="rip"><textarea id="out" readonly></textarea><button class="cp" id="cb">Copy</button></div></div></div>
+  <div class="rcol">
+    <div class="plaid"><div class="card">
+      <div class="row"><input id="fn" placeholder="Font name"><button id="sv">Save</button></div>
+      <div class="sec">Symbol Converter</div>
+      <div class="row"><input id="ki" placeholder="#"><input id="vi" placeholder="becomes"><button id="ap">Add</button></div>
+      <div class="slist" id="slist"></div>
+      <div class="sec">Alphabet Converter</div>
+      <textarea id="abcBox"></textarea>
+    </div></div>
+    <div class="card blank"><div id="blkTxt" style="outline:0;min-height:70px"></div><img class="bunny" src="bunny.png"></div>
+  </div>
+</div>
+<div class="paws" id="pawBar"></div>
+<script>
+var ABC="abcdefghijklmnopqrstuvwxyz".split(""),cur=0,useAbc=1,adm=location.hash==="#edit";
+function defAbc(){return ABC.map(function(c){return c+" = "}).join("\n")}
+var fonts=[{name:"Default",syms:{},abc:defAbc(),pinned:0}];
+try{var s=JSON.parse(localStorage.getItem("plushyF1"));if(s&&s.length)fonts=s}catch(e){}
+function el(i){return document.getElementById(i)}
+function save(){localStorage.setItem("plushyF1",JSON.stringify(fonts))}
+function fixImg(img,b){var e=[".GIF",".webp",".png",".jpg"],x=0;img.onerror=function(){if(x<e.length)img.src=b+e[x++]}}
+fixImg(el("dollImg"),"doll");
+for(var p=0;p<8;p++){var pi=document.createElement("img");pi.src="paws.gif";fixImg(pi,"paws");el("pawBar").appendChild(pi)}
+if(adm){el("btxt").contentEditable="true";el("blkTxt").contentEditable="true";el("btxt").oninput=function(){localStorage.setItem("pBan",el("btxt").innerText)};el("blkTxt").oninput=function(){localStorage.setItem("pBlk",el("blkTxt").innerText)}}
+if(localStorage.getItem("pBan"))el("btxt").innerText=localStorage.getItem("pBan");
+if(localStorage.getItem("pBlk"))el("blkTxt").innerText=localStorage.getItem("pBlk");
+function render(){
+  var s=el("fs");s.innerHTML="";
+  fonts.forEach(function(f,i){var o=document.createElement("option");o.value=i;o.textContent=(f.pinned?"[Pinned] ":"")+f.name;if(i===cur)o.selected=true;s.appendChild(o)});
+  el("fn").value=fonts[cur].name;el("abcBox").value=fonts[cur].abc;el("db").style.display=fonts.length>1?"inline-block":"none";
+  var sl=el("slist");sl.innerHTML="";var m=fonts[cur].syms||{};
+  Object.keys(m).forEach(function(k){var d=document.createElement("div");d.className="sitem";d.innerHTML="<span>"+k+" → "+m[k]+"</span>";var b=document.createElement("button");b.textContent="x";b.onclick=function(){delete m[k];save();render();conv()};d.appendChild(b);sl.appendChild(d)});
+}
+function getMap(){
+  var m=Object.assign({},fonts[cur].syms||{}),raw=(fonts[cur].abc||"").trim();
+  if(raw.indexOf("=")!==-1){raw.split(/\n+/).forEach(function(ln){var eq=ln.indexOf("=");if(eq===-1)return;var k=ln.slice(0,eq).trim(),v=ln.slice(eq+1);if(v.charAt(0)===" ")v=v.slice(1);if(k&&v)m[k]=v})}
+  else if(raw){var p=raw.indexOf(" ")!==-1?raw.split(/\s+/):Array.from(raw);ABC.forEach(function(c,i){if(p[i])m[c]=p[i]})}
+  return m;
+}
+function conv(){
+  var m=getMap(),ks=Object.keys(m).sort(function(a,b){return b.length-a.length}),t=el("in").value,r="",i=0;
+  while(i<t.length){
+    var h=0;
+    for(var j=0;j<ks.length;j++){var k=ks[j];if(/^[a-zA-Z]$/.test(k)){var sub=t.charAt(i);if(sub===k||(useAbc&&sub.toLowerCase()===k.toLowerCase())){r+=m[k];i++;h=1;break}}else if(t.indexOf(k,i)===i){r+=m[k];i+=k.length;h=1;break}}
+    if(!h){var c=t.charCodeAt(i);if(c>=55296&&c<=56319&&i+1<t.length){r+=t.slice(i,i+2);i+=2}else{r+=t.charAt(i);i++}}
+  }
+  el("out").value=r;
+}
+el("in").oninput=conv;el("abcBox").oninput=function(){fonts[cur].abc=el("abcBox").value;save();conv()};
+el("fs").onchange=function(e){cur=Number(e.target.value);render();conv()};
+el("ab").onclick=function(){useAbc=!useAbc;el("ab").classList.toggle("off",!useAbc);conv()};
+el("ap").onclick=function(){var k=el("ki").value.trim(),v=el("vi").value;if(!k)return;fonts[cur].syms[k]=v;el("ki").value="";el("vi").value="";save();render();conv()};
+el("sv").onclick=function(){fonts[cur].name=el("fn").value.trim()||"Font";save();render()};
+el("nb").onclick=function(){fonts.push({name:"Font "+(fonts.length+1),syms:{},abc:defAbc(),pinned:0});cur=fonts.length-1;save();render();conv()};
+el("pb").onclick=function(){fonts[cur].pinned=fonts[cur].pinned?0:1;save();render()};
+el("db").onclick=function(){if(fonts.length>1){fonts.splice(cur,1);cur=0;save();render();conv()}};
+el("cb").onclick=function(){navigator.clipboard.writeText(el("out").value);el("cb").textContent="Copied";setTimeout(function(){el("cb").textContent="Copy"},1200)};
+el("sb").onclick=function(){navigator.clipboard.writeText(location.origin+location.pathname);el("sb").textContent="Copied";setTimeout(function(){el("sb").textContent="Copy Link"},1200)};
+render();
+</script></body></html>
